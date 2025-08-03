@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Evidence - GovSpend Mirror</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fgovspendm5687back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Global Header -->
+    <header class="bg-surface border-b border-border sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="dashboard.html" class="flex items-center space-x-2">
+                        <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        <span class="font-heading font-bold text-xl text-text-primary">GovSpend Mirror</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="dashboard.html" class="text-text-secondary hover:text-text-primary transition-civic">Dashboard</a>
+                    <a href="project_browse_search.html" class="text-text-secondary hover:text-text-primary transition-civic">Browse Projects</a>
+                    <a href="user_profile_settings.html" class="text-text-secondary hover:text-text-primary transition-civic">Profile</a>
+                </nav>
+
+                <!-- Right Side Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Back Button -->
+                    <button onclick="history.back()" class="p-2 text-text-secondary hover:text-text-primary transition-civic">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                    </button>
+
+                    <!-- Profile -->
+                    <a href="user_profile_settings.html" class="flex items-center space-x-2 p-2 rounded-civic hover:bg-secondary-50 transition-civic">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Profile" class="w-8 h-8 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <span class="hidden sm:block text-sm font-medium text-text-primary">John Doe</span>
+                    </a>
+
+                    <!-- Mobile Menu Button -->
+                    <button class="md:hidden p-2 text-text-secondary hover:text-text-primary transition-civic" onclick="toggleMobileMenu()">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden border-t border-border bg-surface">
+            <div class="px-4 py-2 space-y-1">
+                <a href="dashboard.html" class="block px-3 py-2 text-text-secondary hover:text-text-primary hover:bg-secondary-50 rounded-civic transition-civic">Dashboard</a>
+                <a href="project_browse_search.html" class="block px-3 py-2 text-text-secondary hover:text-text-primary hover:bg-secondary-50 rounded-civic transition-civic">Browse Projects</a>
+                <a href="user_profile_settings.html" class="block px-3 py-2 text-text-secondary hover:text-text-primary hover:bg-secondary-50 rounded-civic transition-civic">Profile</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <h1 class="font-heading text-3xl font-bold text-text-primary mb-2">Submit Evidence</h1>
+            <p class="text-text-secondary">Upload photo or video documentation of government project progress</p>
+        </div>
+
+        <!-- Project Context Card -->
+        <div class="bg-surface rounded-civic shadow-civic p-6 mb-8">
+            <h2 class="font-heading font-semibold text-text-primary mb-4">Project Context</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="text-sm font-medium text-text-secondary">Project Name</label>
+                    <p class="text-text-primary font-medium">Highway Construction - Phase 2</p>
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-text-secondary">Location</label>
+                    <p class="text-text-primary font-medium">Mumbai - Pune Expressway</p>
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-text-secondary">Current Status</label>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-warning-100 text-warning">In Progress</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Evidence Upload Form -->
+        <form id="evidenceForm" class="space-y-8">
+            <!-- File Upload Section -->
+            <div class="bg-surface rounded-civic shadow-civic p-6">
+                <h3 class="font-heading font-semibold text-text-primary mb-4">Upload Evidence</h3>
+                
+                <!-- Main Upload Area -->
+                <div id="uploadArea" class="border-2 border-dashed border-border rounded-civic p-8 text-center hover:border-primary transition-civic cursor-pointer">
+                    <div id="uploadPlaceholder">
+                        <svg class="mx-auto h-12 w-12 text-text-secondary mb-4" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <p class="text-lg font-medium text-text-primary mb-2">Drag and drop files here, or click to select</p>
+                        <p class="text-sm text-text-secondary mb-4">Supports JPG, PNG, MP4, MOV files up to 10MB</p>
+                        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                            <button type="button" onclick="openCamera()" class="bg-primary text-white px-4 py-2 rounded-civic hover:bg-primary-700 transition-civic flex items-center justify-center space-x-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                <span>Take Photo</span>
+                            </button>
+                            <button type="button" onclick="document.getElementById('fileInput').click()" class="bg-surface border border-border text-text-primary px-4 py-2 rounded-civic hover:bg-secondary-50 transition-civic flex items-center justify-center space-x-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                </svg>
+                                <span>Choose Files</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- File Preview Area -->
+                    <div id="filePreview" class="hidden">
+                        <div id="uploadedFiles" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4"></div>
+                        <button type="button" onclick="clearFiles()" class="text-error hover:text-error text-sm font-medium">Clear All Files</button>
+                    </div>
+                </div>
+                
+                <input type="file" id="fileInput" multiple accept="image/*,video/*" class="hidden" onchange="handleFileSelect(event)" />
+                
+                <!-- Upload Progress -->
+                <div id="uploadProgress" class="hidden mt-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-text-primary">Uploading...</span>
+                        <span id="progressPercent" class="text-sm font-medium text-text-primary">0%</span>
+                    </div>
+                    <div class="w-full bg-secondary-200 rounded-full h-2">
+                        <div id="progressBar" class="bg-primary h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Evidence Details -->
+            <div class="bg-surface rounded-civic shadow-civic p-6">
+                <h3 class="font-heading font-semibold text-text-primary mb-4">Evidence Details</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Evidence Type -->
+                    <div>
+                        <label for="evidenceType" class="block text-sm font-medium text-text-primary mb-2">Evidence Type</label>
+                        <select id="evidenceType" class="w-full px-3 py-2 border border-border rounded-civic focus:ring-2 focus:ring-primary focus:border-primary transition-civic">
+                            <option value>Select evidence type</option>
+                            <option value="construction_progress">Construction Progress</option>
+                            <option value="completion_status">Completion Status</option>
+                            <option value="quality_check">Quality Check</option>
+                            <option value="safety_concern">Safety Concern</option>
+                            <option value="budget_usage">Budget Usage</option>
+                            <option value="timeline_delay">Timeline Delay</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Location Verification -->
+                    <div>
+                        <label class="block text-sm font-medium text-text-primary mb-2">Location Verification</label>
+                        <div class="flex items-center space-x-3">
+                            <button type="button" onclick="getCurrentLocation()" class="bg-accent text-white px-4 py-2 rounded-civic hover:bg-accent-700 transition-civic flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                <span>Use Current Location</span>
+                            </button>
+                            <span id="locationStatus" class="text-sm text-text-secondary">Location not verified</span>
+                        </div>
+                        <input type="hidden" id="latitude" name="latitude" />
+                        <input type="hidden" id="longitude" name="longitude" />
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="mt-6">
+                    <label for="description" class="block text-sm font-medium text-text-primary mb-2">Description</label>
+                    <textarea id="description" rows="4" class="w-full px-3 py-2 border border-border rounded-civic focus:ring-2 focus:ring-primary focus:border-primary transition-civic" placeholder="Describe what the evidence shows, any concerns, or additional context..."></textarea>
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-sm text-text-secondary">Optional but recommended</span>
+                        <span id="charCount" class="text-sm text-text-secondary">0/500</span>
+                    </div>
+                </div>
+
+                <!-- Tags/Categories -->
+                <div class="mt-6">
+                    <label class="block text-sm font-medium text-text-primary mb-2">Suggested Tags</label>
+                    <div id="suggestedTags" class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-secondary-100 text-text-secondary cursor-pointer hover:bg-primary-100 hover:text-primary transition-civic" onclick="toggleTag(this)">infrastructure</span>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-secondary-100 text-text-secondary cursor-pointer hover:bg-primary-100 hover:text-primary transition-civic" onclick="toggleTag(this)">progress-update</span>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-secondary-100 text-text-secondary cursor-pointer hover:bg-primary-100 hover:text-primary transition-civic" onclick="toggleTag(this)">quality-control</span>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-secondary-100 text-text-secondary cursor-pointer hover:bg-primary-100 hover:text-primary transition-civic" onclick="toggleTag(this)">timeline</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy & Submission Settings -->
+            <div class="bg-surface rounded-civic shadow-civic p-6">
+                <h3 class="font-heading font-semibold text-text-primary mb-4">Privacy & Submission Settings</h3>
+                
+                <div class="space-y-4">
+                    <!-- Anonymous Submission -->
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <label class="text-sm font-medium text-text-primary">Anonymous Submission</label>
+                            <p class="text-sm text-text-secondary">Submit evidence without revealing your identity</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="anonymousSubmission" class="sr-only peer" />
+                            <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-border after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        </label>
+                    </div>
+
+                    <!-- Public Visibility -->
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <label class="text-sm font-medium text-text-primary">Public Visibility</label>
+                            <p class="text-sm text-text-secondary">Allow other citizens to view this evidence</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="publicVisibility" checked class="sr-only peer" />
+                            <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-border after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Section -->
+            <div class="bg-surface rounded-civic shadow-civic p-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+                    <div>
+                        <h3 class="font-heading font-semibold text-text-primary">Ready to Submit?</h3>
+                        <p class="text-sm text-text-secondary">Your evidence will be reviewed within 2-3 business days</p>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button type="button" onclick="saveDraft()" class="px-6 py-2 border border-border text-text-primary rounded-civic hover:bg-secondary-50 transition-civic">Save Draft</button>
+                        <button type="submit" class="px-6 py-2 bg-primary text-white rounded-civic hover:bg-primary-700 transition-civic flex items-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                            </svg>
+                            <span>Submit Evidence</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-surface rounded-civic p-6 max-w-md w-full">
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-success-100 mb-4">
+                    <svg class="h-6 w-6 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-medium text-text-primary mb-2">Evidence Submitted Successfully!</h3>
+                <p class="text-sm text-text-secondary mb-4">Your submission has been received. Tracking reference: <span id="trackingId" class="font-medium text-primary">#EVD2025080001</span></p>
+                <p class="text-sm text-text-secondary mb-6">Estimated review time: 2-3 business days</p>
+                <div class="flex space-x-3">
+                    <button onclick="closeSuccessModal()" class="flex-1 px-4 py-2 border border-border text-text-primary rounded-civic hover:bg-secondary-50 transition-civic">View Submissions</button>
+                    <button onclick="submitAnother()" class="flex-1 px-4 py-2 bg-primary text-white rounded-civic hover:bg-primary-700 transition-civic">Submit Another</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let uploadedFiles = [];
+        let selectedTags = [];
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // File handling
+        function handleFileSelect(event) {
+            const files = Array.from(event.target.files);
+            uploadFiles(files);
+        }
+
+        function uploadFiles(files) {
+            uploadedFiles = [...uploadedFiles, ...files];
+            displayFilePreview();
+            simulateUpload();
+        }
+
+        function displayFilePreview() {
+            const previewContainer = document.getElementById('uploadedFiles');
+            const placeholder = document.getElementById('uploadPlaceholder');
+            const preview = document.getElementById('filePreview');
+
+            if (uploadedFiles.length > 0) {
+                placeholder.classList.add('hidden');
+                preview.classList.remove('hidden');
+                
+                previewContainer.innerHTML = '';
+                uploadedFiles.forEach((file, index) => {
+                    const fileElement = createFilePreview(file, index);
+                    previewContainer.appendChild(fileElement);
+                });
+            }
+        }
+
+        function createFilePreview(file, index) {
+            const div = document.createElement('div');
+            div.className = 'relative bg-secondary-50 rounded-civic p-3';
+            
+            const isImage = file.type.startsWith('image/');
+            const isVideo = file.type.startsWith('video/');
+            
+            div.innerHTML = `
+                <div class="aspect-square bg-secondary-200 rounded-civic mb-2 flex items-center justify-center">
+                    ${isImage ? `<img src="${URL.createObjectURL(file)}" class="w-full h-full object-cover rounded-civic" alt="Preview">` : 
+                      isVideo ? `<svg class="w-8 h-8 text-text-secondary" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>` :
+                      `<svg class="w-8 h-8 text-text-secondary" fill="currentColor" viewBox="0 0 24 24"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" /></svg>`}
+                </div>
+                <p class="text-xs text-text-primary font-medium truncate">${file.name}</p>
+                <p class="text-xs text-text-secondary">${formatFileSize(file.size)}</p>
+                <button type="button" onclick="removeFile(${index})" class="absolute top-1 right-1 bg-error text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-error text-xs">×</button>
+            `;
+            
+            return div;
+        }
+
+        function removeFile(index) {
+            uploadedFiles.splice(index, 1);
+            displayFilePreview();
+            
+            if (uploadedFiles.length === 0) {
+                document.getElementById('uploadPlaceholder').classList.remove('hidden');
+                document.getElementById('filePreview').classList.add('hidden');
+            }
+        }
+
+        function clearFiles() {
+            uploadedFiles = [];
+            document.getElementById('uploadPlaceholder').classList.remove('hidden');
+            document.getElementById('filePreview').classList.add('hidden');
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function simulateUpload() {
+            const progressContainer = document.getElementById('uploadProgress');
+            const progressBar = document.getElementById('progressBar');
+            const progressPercent = document.getElementById('progressPercent');
+            
+            progressContainer.classList.remove('hidden');
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 30;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        progressContainer.classList.add('hidden');
+                    }, 1000);
+                }
+                
+                progressBar.style.width = progress + '%';
+                progressPercent.textContent = Math.round(progress) + '%';
+            }, 300);
+        }
+
+        // Camera functionality
+        function openCamera() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                // In a real app, you would implement camera capture here
+                alert('Camera functionality would be implemented here. For now, please use the file upload option.');
+            } else {
+                alert('Camera access is not supported in this browser. Please use the file upload option.');
+            }
+        }
+
+        // Location functionality
+        function getCurrentLocation() {
+            const statusElement = document.getElementById('locationStatus');
+            
+            if (navigator.geolocation) {
+                statusElement.textContent = 'Getting location...';
+                statusElement.className = 'text-sm text-warning';
+                
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        document.getElementById('latitude').value = position.coords.latitude;
+                        document.getElementById('longitude').value = position.coords.longitude;
+                        statusElement.textContent = `Location verified (±${Math.round(position.coords.accuracy)}m)`;
+                        statusElement.className = 'text-sm text-success';
+                    },
+                    (error) => {
+                        statusElement.textContent = 'Location access denied';
+                        statusElement.className = 'text-sm text-error';
+                    }
+                );
+            } else {
+                statusElement.textContent = 'Geolocation not supported';
+                statusElement.className = 'text-sm text-error';
+            }
+        }
+
+        // Tag functionality
+        function toggleTag(element) {
+            const tag = element.textContent;
+            if (element.classList.contains('bg-primary-100')) {
+                element.classList.remove('bg-primary-100', 'text-primary');
+                element.classList.add('bg-secondary-100', 'text-text-secondary');
+                selectedTags = selectedTags.filter(t => t !== tag);
+            } else {
+                element.classList.remove('bg-secondary-100', 'text-text-secondary');
+                element.classList.add('bg-primary-100', 'text-primary');
+                selectedTags.push(tag);
+            }
+        }
+
+        // Character count
+        document.getElementById('description').addEventListener('input', function() {
+            const count = this.value.length;
+            document.getElementById('charCount').textContent = `${count}/500`;
+        });
+
+        // Form submission
+        document.getElementById('evidenceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate form
+            if (uploadedFiles.length === 0) {
+                alert('Please upload at least one file.');
+                return;
+            }
+            
+            const evidenceType = document.getElementById('evidenceType').value;
+            if (!evidenceType) {
+                alert('Please select an evidence type.');
+                return;
+            }
+            
+            // Show success modal
+            showSuccessModal();
+        });
+
+        function showSuccessModal() {
+            // Generate tracking ID
+            const trackingId = '#EVD' + new Date().getFullYear() + String(Date.now()).slice(-6);
+            document.getElementById('trackingId').textContent = trackingId;
+            document.getElementById('successModal').classList.remove('hidden');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.add('hidden');
+            window.location.href = 'dashboard.html';
+        }
+
+        function submitAnother() {
+            document.getElementById('successModal').classList.add('hidden');
+            // Reset form
+            document.getElementById('evidenceForm').reset();
+            clearFiles();
+            selectedTags = [];
+            document.getElementById('locationStatus').textContent = 'Location not verified';
+            document.getElementById('locationStatus').className = 'text-sm text-text-secondary';
+            
+            // Reset tags
+            document.querySelectorAll('#suggestedTags span').forEach(tag => {
+                tag.classList.remove('bg-primary-100', 'text-primary');
+                tag.classList.add('bg-secondary-100', 'text-text-secondary');
+            });
+        }
+
+        function saveDraft() {
+            alert('Draft saved successfully! You can continue editing later.');
+        }
+
+        // Drag and drop functionality
+        const uploadArea = document.getElementById('uploadArea');
+        
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('border-primary', 'bg-primary-50');
+        });
+        
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('border-primary', 'bg-primary-50');
+        });
+        
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('border-primary', 'bg-primary-50');
+            
+            const files = Array.from(e.dataTransfer.files);
+            uploadFiles(files);
+        });
+        
+        uploadArea.addEventListener('click', function() {
+            document.getElementById('fileInput').click();
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const button = event.target.closest('button');
+            
+            if (!menu.contains(event.target) && (!button || !button.onclick || button.onclick.toString().indexOf('toggleMobileMenu') === -1)) {
+                menu.classList.add('hidden');
+            }
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

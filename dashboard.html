@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - GovSpend Mirror</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fgovspendm5687back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Global Header -->
+    <header class="bg-surface border-b border-border sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="dashboard.html" class="flex items-center space-x-2">
+                        <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        <span class="font-heading font-bold text-xl text-text-primary">GovSpend Mirror</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="dashboard.html" class="text-primary font-medium border-b-2 border-primary pb-1">Dashboard</a>
+                    <a href="project_browse_search.html" class="text-text-secondary hover:text-text-primary transition-civic">Browse Projects</a>
+                    <a href="user_profile_settings.html" class="text-text-secondary hover:text-text-primary transition-civic">Profile</a>
+                </nav>
+
+                <!-- Right Side Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Search Icon -->
+                    <button class="p-2 text-text-secondary hover:text-text-primary transition-civic" onclick="toggleSearch()">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </button>
+
+                    <!-- Notifications -->
+                    <button class="relative p-2 text-text-secondary hover:text-text-primary transition-civic">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM10.07 2.82l3.93 3.93-3.93 3.93M21 12H3"/>
+                        </svg>
+                        <span class="absolute -top-1 -right-1 bg-error text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                    </button>
+
+                    <!-- Profile -->
+                    <a href="user_profile_settings.html" class="flex items-center space-x-2 p-2 rounded-civic hover:bg-secondary-50 transition-civic">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Profile" class="w-8 h-8 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <span class="hidden sm:block text-sm font-medium text-text-primary">John Doe</span>
+                    </a>
+
+                    <!-- Mobile Menu Button -->
+                    <button class="md:hidden p-2 text-text-secondary hover:text-text-primary transition-civic" onclick="toggleMobileMenu()">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden border-t border-border bg-surface">
+            <div class="px-4 py-2 space-y-1">
+                <a href="dashboard.html" class="block px-3 py-2 text-primary font-medium bg-primary-50 rounded-civic">Dashboard</a>
+                <a href="project_browse_search.html" class="block px-3 py-2 text-text-secondary hover:text-text-primary hover:bg-secondary-50 rounded-civic transition-civic">Browse Projects</a>
+                <a href="user_profile_settings.html" class="block px-3 py-2 text-text-secondary hover:text-text-primary hover:bg-secondary-50 rounded-civic transition-civic">Profile</a>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div id="searchBar" class="hidden border-t border-border bg-surface px-4 py-3">
+            <div class="max-w-2xl mx-auto">
+                <div class="relative">
+                    <input type="text" placeholder="Search projects, ministries, or locations..." class="w-full pl-10 pr-4 py-2 border border-border rounded-civic focus:ring-2 focus:ring-primary focus:border-primary transition-civic" />
+                    <svg class="absolute left-3 top-2.5 w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+            <!-- Desktop Sidebar -->
+            <aside class="hidden lg:block lg:col-span-3">
+                <div class="bg-surface rounded-civic shadow-civic p-6 sticky top-24">
+                    <h3 class="font-heading font-semibold text-text-primary mb-4">Quick Actions</h3>
+                    <div class="space-y-3">
+                        <button class="w-full bg-primary text-white py-3 px-4 rounded-civic font-medium hover:bg-primary-700 transition-civic flex items-center justify-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            <span>Submit Evidence</span>
+                        </button>
+                        <a href="project_browse_search.html" class="w-full bg-surface border border-border text-text-primary py-3 px-4 rounded-civic font-medium hover:bg-secondary-50 transition-civic flex items-center justify-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                            <span>Browse Projects</span>
+                        </a>
+                        <button class="w-full bg-surface border border-border text-text-primary py-3 px-4 rounded-civic font-medium hover:bg-secondary-50 transition-civic flex items-center justify-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <span>My Contributions</span>
+                        </button>
+                    </div>
+
+                    <!-- Recent Bookmarks -->
+                    <div class="mt-8">
+                        <h4 class="font-medium text-text-primary mb-3">Recent Bookmarks</h4>
+                        <div class="space-y-2">
+                            <a href="project_details.html" class="block p-3 bg-secondary-50 rounded-civic hover:bg-secondary-100 transition-civic">
+                                <div class="text-sm font-medium text-text-primary">Highway Construction</div>
+                                <div class="text-xs text-text-secondary">Ministry of Transport</div>
+                            </a>
+                            <a href="project_details.html" class="block p-3 bg-secondary-50 rounded-civic hover:bg-secondary-100 transition-civic">
+                                <div class="text-sm font-medium text-text-primary">School Renovation</div>
+                                <div class="text-xs text-text-secondary">Ministry of Education</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <div class="lg:col-span-9">
+                <!-- Welcome Section -->
+                <div class="mb-8">
+                    <h1 class="font-heading text-3xl font-bold text-text-primary mb-2">Welcome back, John!</h1>
+                    <p class="text-text-secondary">Track government promises and hold officials accountable</p>
+                </div>
+
+                <!-- Summary Metrics Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Total Projects -->
+                    <div class="bg-surface rounded-civic shadow-civic p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-text-secondary text-sm font-medium">Total Projects Tracked</p>
+                                <p class="text-3xl font-bold text-text-primary">1,247</p>
+                                <p class="text-success text-sm flex items-center mt-1">
+                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    +12% from last month
+                                </p>
+                            </div>
+                            <div class="bg-primary-50 p-3 rounded-civic">
+                                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Budget Allocated -->
+                    <div class="bg-surface rounded-civic shadow-civic p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-text-secondary text-sm font-medium">Budget Allocated</p>
+                                <p class="text-3xl font-bold text-text-primary">₹2.4B</p>
+                                <p class="text-warning text-sm flex items-center mt-1">
+                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                    </svg>
+                                    -3% from target
+                                </p>
+                            </div>
+                            <div class="bg-accent-50 p-3 rounded-civic">
+                                <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Completion Rate -->
+                    <div class="bg-surface rounded-civic shadow-civic p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-text-secondary text-sm font-medium">Completion Rate</p>
+                                <p class="text-3xl font-bold text-text-primary">68%</p>
+                                <div class="w-full bg-secondary-200 rounded-full h-2 mt-2">
+                                    <div class="bg-success h-2 rounded-full" style="width: 68%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-success-50 p-3 rounded-civic">
+                                <svg class="w-8 h-8 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- Budget Distribution Chart -->
+                    <div class="bg-surface rounded-civic shadow-civic p-6">
+                        <h3 class="font-heading font-semibold text-text-primary mb-4">Budget Distribution by Ministry</h3>
+                        <div class="relative h-64">
+                            <canvas id="budgetChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Regional Project Status -->
+                    <div class="bg-surface rounded-civic shadow-civic p-6">
+                        <h3 class="font-heading font-semibold text-text-primary mb-4">Regional Project Status</h3>
+                        <div class="relative h-64">
+                            <canvas id="regionalChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Feed -->
+                <div class="bg-surface rounded-civic shadow-civic p-6 mb-8">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-heading font-semibold text-text-primary">Recent Activity</h3>
+                        <button class="text-primary hover:text-primary-700 text-sm font-medium transition-civic">View All</button>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Activity Item 1 -->
+                        <div class="flex items-start space-x-4 p-4 bg-secondary-50 rounded-civic">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 bg-success-100 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-success" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-text-primary">Highway Construction Project Completed</p>
+                                <p class="text-sm text-text-secondary">Ministry of Transport • 2 hours ago</p>
+                                <p class="text-sm text-text-secondary mt-1">₹45M project successfully delivered on time with citizen verification</p>
+                            </div>
+                            <a href="project_details.html" class="text-primary hover:text-primary-700 text-sm font-medium transition-civic">View</a>
+                        </div>
+
+                        <!-- Activity Item 2 -->
+                        <div class="flex items-start space-x-4 p-4 bg-secondary-50 rounded-civic">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-text-primary">New Evidence Submitted</p>
+                                <p class="text-sm text-text-secondary">Sarah Johnson • 4 hours ago</p>
+                                <p class="text-sm text-text-secondary mt-1">Photo evidence uploaded for School Renovation Project in Mumbai</p>
+                            </div>
+                            <a href="project_details.html" class="text-primary hover:text-primary-700 text-sm font-medium transition-civic">View</a>
+                        </div>
+
+                        <!-- Activity Item 3 -->
+                        <div class="flex items-start space-x-4 p-4 bg-secondary-50 rounded-civic">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 bg-warning-100 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-warning" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-text-primary">Budget Discrepancy Detected</p>
+                                <p class="text-sm text-text-secondary">System Alert • 6 hours ago</p>
+                                <p class="text-sm text-text-secondary mt-1">Water Supply Project shows 15% variance between allocated and disbursed funds</p>
+                            </div>
+                            <a href="project_details.html" class="text-primary hover:text-primary-700 text-sm font-medium transition-civic">View</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Quick Actions -->
+                <div class="lg:hidden grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <button class="bg-primary text-white py-4 px-4 rounded-civic font-medium hover:bg-primary-700 transition-civic flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        <span>Submit Evidence</span>
+                    </button>
+                    <a href="project_browse_search.html" class="bg-surface border border-border text-text-primary py-4 px-4 rounded-civic font-medium hover:bg-secondary-50 transition-civic flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <span>Browse</span>
+                    </a>
+                    <button class="bg-surface border border-border text-text-primary py-4 px-4 rounded-civic font-medium hover:bg-secondary-50 transition-civic flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <span>My Work</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Search toggle
+        function toggleSearch() {
+            const searchBar = document.getElementById('searchBar');
+            searchBar.classList.toggle('hidden');
+            if (!searchBar.classList.contains('hidden')) {
+                searchBar.querySelector('input').focus();
+            }
+        }
+
+        // Initialize Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Budget Distribution Chart
+            const budgetCtx = document.getElementById('budgetChart').getContext('2d');
+            new Chart(budgetCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Transport', 'Education', 'Healthcare', 'Infrastructure', 'Agriculture'],
+                    datasets: [{
+                        data: [30, 25, 20, 15, 10],
+                        backgroundColor: [
+                            '#1E40AF',
+                            '#059669',
+                            '#F59E0B',
+                            '#EF4444',
+                            '#64748B'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Regional Project Status Chart
+            const regionalCtx = document.getElementById('regionalChart').getContext('2d');
+            new Chart(regionalCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['North', 'South', 'East', 'West', 'Central'],
+                    datasets: [{
+                        label: 'Completed',
+                        data: [45, 38, 42, 35, 40],
+                        backgroundColor: '#10B981'
+                    }, {
+                        label: 'In Progress',
+                        data: [25, 30, 28, 32, 25],
+                        backgroundColor: '#F59E0B'
+                    }, {
+                        label: 'Planned',
+                        data: [15, 20, 18, 22, 20],
+                        backgroundColor: '#64748B'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const button = event.target.closest('button');
+            
+            if (!menu.contains(event.target) && (!button || !button.onclick || button.onclick.toString().indexOf('toggleMobileMenu') === -1)) {
+                menu.classList.add('hidden');
+            }
+        });
+
+        // Close search when clicking outside
+        document.addEventListener('click', function(event) {
+            const searchBar = document.getElementById('searchBar');
+            const searchButton = event.target.closest('button');
+            
+            if (!searchBar.contains(event.target) && (!searchButton || searchButton.onclick.toString().indexOf('toggleSearch') === -1)) {
+                searchBar.classList.add('hidden');
+            }
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

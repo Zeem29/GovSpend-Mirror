@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Browse Projects - GovSpend Mirror</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fgovspendm5687back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Global Header -->
+    <header class="bg-surface border-b border-border sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="dashboard.html" class="flex items-center space-x-2">
+                        <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        <span class="font-heading font-bold text-xl text-text-primary">GovSpend Mirror</span>
+                    </a>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-2xl mx-4 relative">
+                    <div class="relative">
+                        <input type="text" id="searchInput" class="w-full pl-10 pr-12 py-2 border border-border rounded-civic focus:ring-2 focus:ring-primary focus:border-primary transition-civic" placeholder="Search projects, ministries, regions..." autocomplete="off" />
+                        <svg class="absolute left-3 top-2.5 w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <button class="absolute right-3 top-2.5 text-text-secondary hover:text-text-primary" onclick="clearSearch()">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Search Suggestions -->
+                    <div id="searchSuggestions" class="absolute top-full left-0 right-0 bg-surface border border-border rounded-civic shadow-civic-elevated mt-1 hidden z-50">
+                        <div class="p-2">
+                            <div class="text-xs text-text-secondary mb-2 px-2">Recent Searches</div>
+                            <div class="space-y-1">
+                                <button class="w-full text-left px-3 py-2 hover:bg-secondary-50 rounded-civic-sm text-sm transition-civic">
+                                    <svg class="w-4 h-4 inline mr-2 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Road infrastructure projects
+                                </button>
+                                <button class="w-full text-left px-3 py-2 hover:bg-secondary-50 rounded-civic-sm text-sm transition-civic">
+                                    <svg class="w-4 h-4 inline mr-2 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Ministry of Health
+                                </button>
+                                <button class="w-full text-left px-3 py-2 hover:bg-secondary-50 rounded-civic-sm text-sm transition-civic">
+                                    <svg class="w-4 h-4 inline mr-2 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Lagos State projects
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Header Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Filter Toggle (Mobile) -->
+                    <button id="filterToggle" class="lg:hidden p-2 text-text-secondary hover:text-text-primary transition-civic" onclick="toggleMobileFilters()">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z"/>
+                        </svg>
+                    </button>
+
+                    <!-- Sort Dropdown -->
+                    <div class="relative">
+                        <button id="sortButton" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-text-secondary hover:text-text-primary border border-border rounded-civic transition-civic" onclick="toggleSortDropdown()">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/>
+                            </svg>
+                            <span>Sort</span>
+                        </button>
+                        
+                        <div id="sortDropdown" class="absolute right-0 top-full mt-1 w-48 bg-surface border border-border rounded-civic shadow-civic-elevated hidden z-50">
+                            <div class="py-1">
+                                <button class="w-full text-left px-4 py-2 text-sm hover:bg-secondary-50 transition-civic" onclick="sortProjects('recent')">
+                                    Recent Activity
+                                </button>
+                                <button class="w-full text-left px-4 py-2 text-sm hover:bg-secondary-50 transition-civic" onclick="sortProjects('budget-high')">
+                                    Budget: High to Low
+                                </button>
+                                <button class="w-full text-left px-4 py-2 text-sm hover:bg-secondary-50 transition-civic" onclick="sortProjects('budget-low')">
+                                    Budget: Low to High
+                                </button>
+                                <button class="w-full text-left px-4 py-2 text-sm hover:bg-secondary-50 transition-civic" onclick="sortProjects('completion')">
+                                    Completion Rate
+                                </button>
+                                <button class="w-full text-left px-4 py-2 text-sm hover:bg-secondary-50 transition-civic" onclick="sortProjects('alphabetical')">
+                                    Alphabetical
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Menu -->
+                    <div class="relative">
+                        <button class="flex items-center space-x-2 p-2 rounded-civic hover:bg-secondary-50 transition-civic">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="User Avatar" class="w-8 h-8 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex max-w-7xl mx-auto">
+        <!-- Desktop Sidebar Filters -->
+        <aside class="hidden lg:block w-80 bg-surface border-r border-border min-h-screen sticky top-16">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="font-heading text-lg font-semibold text-text-primary">Filters</h2>
+                    <button class="text-sm text-primary hover:text-primary-700 transition-civic" onclick="clearAllFilters()">
+                        Clear All
+                    </button>
+                </div>
+
+                <!-- Filter Sections -->
+                <div class="space-y-6">
+                    <!-- Ministry Filter -->
+                    <div>
+                        <button class="flex items-center justify-between w-full py-2 text-left font-medium text-text-primary" onclick="toggleFilterSection('ministry')">
+                            <span>Ministry</span>
+                            <svg class="w-5 h-5 transform transition-transform" id="ministryChevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div id="ministryFilter" class="mt-3 space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="health" />
+                                <span class="ml-2 text-sm text-text-secondary">Ministry of Health</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">24</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="education" />
+                                <span class="ml-2 text-sm text-text-secondary">Ministry of Education</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">18</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="infrastructure" />
+                                <span class="ml-2 text-sm text-text-secondary">Ministry of Infrastructure</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">32</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="agriculture" />
+                                <span class="ml-2 text-sm text-text-secondary">Ministry of Agriculture</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">15</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Region Filter -->
+                    <div>
+                        <button class="flex items-center justify-between w-full py-2 text-left font-medium text-text-primary" onclick="toggleFilterSection('region')">
+                            <span>Region</span>
+                            <svg class="w-5 h-5 transform transition-transform" id="regionChevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div id="regionFilter" class="mt-3 space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="lagos" />
+                                <span class="ml-2 text-sm text-text-secondary">Lagos State</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">28</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="abuja" />
+                                <span class="ml-2 text-sm text-text-secondary">FCT Abuja</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">22</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="kano" />
+                                <span class="ml-2 text-sm text-text-secondary">Kano State</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">19</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Budget Range Filter -->
+                    <div>
+                        <button class="flex items-center justify-between w-full py-2 text-left font-medium text-text-primary" onclick="toggleFilterSection('budget')">
+                            <span>Budget Range</span>
+                            <svg class="w-5 h-5 transform transition-transform" id="budgetChevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div id="budgetFilter" class="mt-3 space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="0-1m" />
+                                <span class="ml-2 text-sm text-text-secondary">Under ₦1M</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">12</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="1m-10m" />
+                                <span class="ml-2 text-sm text-text-secondary">₦1M - ₦10M</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">35</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="10m-100m" />
+                                <span class="ml-2 text-sm text-text-secondary">₦10M - ₦100M</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">28</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="100m+" />
+                                <span class="ml-2 text-sm text-text-secondary">Over ₦100M</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">14</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Status Filter -->
+                    <div>
+                        <button class="flex items-center justify-between w-full py-2 text-left font-medium text-text-primary" onclick="toggleFilterSection('status')">
+                            <span>Project Status</span>
+                            <svg class="w-5 h-5 transform transition-transform" id="statusChevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div id="statusFilter" class="mt-3 space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="completed" />
+                                <span class="ml-2 text-sm text-text-secondary flex items-center">
+                                    <span class="w-2 h-2 bg-success rounded-full mr-2"></span>
+                                    Completed
+                                </span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">42</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="in-progress" />
+                                <span class="ml-2 text-sm text-text-secondary flex items-center">
+                                    <span class="w-2 h-2 bg-warning rounded-full mr-2"></span>
+                                    In Progress
+                                </span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">31</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="planned" />
+                                <span class="ml-2 text-sm text-text-secondary flex items-center">
+                                    <span class="w-2 h-2 bg-secondary-400 rounded-full mr-2"></span>
+                                    Planned
+                                </span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">16</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="abandoned" />
+                                <span class="ml-2 text-sm text-text-secondary flex items-center">
+                                    <span class="w-2 h-2 bg-error rounded-full mr-2"></span>
+                                    Abandoned
+                                </span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">8</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-4 lg:p-6">
+            <!-- Active Filters & Results Header -->
+            <div class="mb-6">
+                <!-- Active Filter Chips -->
+                <div id="activeFilters" class="flex flex-wrap gap-2 mb-4">
+                    <!-- Filter chips will be dynamically added here -->
+                </div>
+
+                <!-- Results Header -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="font-heading text-2xl font-bold text-text-primary">Government Projects</h1>
+                        <p class="text-text-secondary mt-1">
+                            <span id="resultsCount">89</span> projects found
+                            <span id="activeFiltersText" class="hidden"> • <span id="filterCount">0</span> filters applied</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Pull to Refresh Indicator (Mobile) -->
+                    <div id="refreshIndicator" class="lg:hidden">
+                        <button class="flex items-center space-x-2 px-3 py-2 text-sm text-text-secondary hover:text-text-primary transition-civic" onclick="refreshProjects()">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            <span>Refresh</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Grid -->
+            <div id="projectGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Project Card 1 -->
+                <div class="bg-surface rounded-civic shadow-civic border border-border hover:shadow-civic-elevated transition-civic">
+                    <div class="relative">
+                        <img src="https://images.pexels.com/photos/416978/pexels-photo-416978.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Lagos-Ibadan Expressway Reconstruction" class="w-full h-48 object-cover rounded-t-civic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <div class="absolute top-3 right-3">
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-warning text-white">
+                                In Progress
+                            </span>
+                        </div>
+                        <button class="absolute top-3 left-3 p-2 bg-white bg-opacity-90 rounded-full hover:bg-opacity-100 transition-civic">
+                            <svg class="w-4 h-4 text-text-secondary hover:text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-heading text-lg font-semibold text-text-primary line-clamp-2">
+                                Lagos-Ibadan Expressway Reconstruction
+                            </h3>
+                            <button class="ml-2 p-1 text-text-secondary hover:text-text-primary transition-civic">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center text-sm text-text-secondary">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                </svg>
+                                Ministry of Infrastructure
+                            </div>
+                            
+                            <div class="flex items-center text-sm text-text-secondary">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                Lagos State
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Budget:</span>
+                                <span class="font-mono text-lg font-semibold text-text-primary">₦127.5B</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Progress Bar -->
+                        <div class="mb-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-text-secondary">Completion</span>
+                                <span class="text-sm font-medium text-text-primary">68%</span>
+                            </div>
+                            <div class="w-full bg-secondary-200 rounded-full h-2">
+                                <div class="bg-warning h-2 rounded-full" style="width: 68%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4 text-xs text-text-secondary">
+                                <span class="flex items-center">
+                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                    </svg>
+                                    142 verifications
+                                </span>
+                                <span class="flex items-center">
+                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zM4 19h16v2H4z"/>
+                                    </svg>
+                                    28 photos
+                                </span>
+                            </div>
+                            
+                            <a href="project_details.html" class="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-civic hover:bg-primary-700 transition-civic">
+                                View Details
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="bg-surface rounded-civic shadow-civic border border-border hover:shadow-civic-elevated transition-civic">
+                    <div class="relative">
+                        <img src="https://images.pixabay.com/photos/2016/11/29/06/15/hospital-1867432_1280.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="National Hospital Abuja Expansion" class="w-full h-48 object-cover rounded-t-civic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <div class="absolute top-3 right-3">
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-success text-white">
+                                Completed
+                            </span>
+                        </div>
+                        <button class="absolute top-3 left-3 p-2 bg-white bg-opacity-90 rounded-full hover:bg-opacity-100 transition-civic">
+                            <svg class="w-4 h-4 text-primary" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-heading text-lg font-semibold text-text-primary line-clamp-2">
+                                National Hospital Abuja Expansion
+                            </h3>
+                            <button class="ml-2 p-1 text-text-secondary hover:text-text-primary transition-civic">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center text-sm text-text-secondary">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                </svg>
+                                Ministry of Health
+                            </div>
+                            
+                            <div class="flex items-center text-sm text-text-secondary">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                FCT Abuja
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Budget:</span>
+                                <span class="font-mono text-lg font-semibold text-text-primary">₦45.2B</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Progress Bar -->
+                        <div class="mb-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-text-secondary">Completion</span>
+                                <span class="text-sm font-medium text-text-primary">100%</span>
+                            </div>
+                            <div class="w-full bg-secondary-200 rounded-full h-2">
+                                <div class="bg-success h-2 rounded-full" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4 text-xs text-text-secondary">
+                                <span class="flex items-center">
+                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                    </svg>
+                                    89 verifications
+                                </span>
+                                <span class="flex items-center">
+                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zM4 19h16v2H4z"/>
+                                    </svg>
+                                    52 photos
+                                </span>
+                            </div>
+                            
+                            <a href="project_details.html" class="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-civic hover:bg-primary-700 transition-civic">
+                                View Details
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="bg-surface rounded-civic shadow-civic border border-border hover:shadow-civic-elevated transition-civic">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Rural School Construction Program" class="w-full h-48 object-cover rounded-t-civic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <div class="absolute top-3 right-3">
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-secondary-400 text-white">
+                                Planned
+                            </span>
+                        </div>
+                        <button class="absolute top-3 left-3 p-2 bg-white bg-opacity-90 rounded-full hover:bg-opacity-100 transition-civic">
+                            <svg class="w-4 h-4 text-text-secondary hover:text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-heading text-lg font-semibold text-text-primary line-clamp-2">
+                                Rural School Construction Program
+                            </h3>
+                            <button class="ml-2 p-1 text-text-secondary hover:text-text-primary transition-civic">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center text-sm text-text-secondary">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                </svg>
+                                Ministry of Education
+                            </div>
+                            
+                            <div class="flex items-center text-sm text-text-secondary">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                Kano State
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Budget:</span>
+                                <span class="font-mono text-lg font-semibold text-text-primary">₦18.7B</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Progress Bar -->
+                        <div class="mb-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-text-secondary">Completion</span>
+                                <span class="text-sm font-medium text-text-primary">0%</span>
+                            </div>
+                            <div class="w-full bg-secondary-200 rounded-full h-2">
+                                <div class="bg-secondary-400 h-2 rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4 text-xs text-text-secondary">
+                                <span class="flex items-center">
+                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                    </svg>
+                                    5 verifications
+                                </span>
+                                <span class="flex items-center">
+                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zM4 19h16v2H4z"/>
+                                    </svg>
+                                    2 photos
+                                </span>
+                            </div>
+                            
+                            <a href="project_details.html" class="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-civic hover:bg-primary-700 transition-civic">
+                                View Details
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loading Skeleton Cards -->
+                <div id="loadingCards" class="hidden">
+                    <!-- Skeleton Card 1 -->
+                    <div class="bg-surface rounded-civic shadow-civic border border-border">
+                        <div class="animate-pulse">
+                            <div class="bg-secondary-200 h-48 rounded-t-civic"></div>
+                            <div class="p-6">
+                                <div class="h-4 bg-secondary-200 rounded mb-3"></div>
+                                <div class="h-3 bg-secondary-200 rounded mb-2"></div>
+                                <div class="h-3 bg-secondary-200 rounded mb-4"></div>
+                                <div class="h-2 bg-secondary-200 rounded mb-4"></div>
+                                <div class="flex justify-between">
+                                    <div class="h-3 bg-secondary-200 rounded w-20"></div>
+                                    <div class="h-8 bg-secondary-200 rounded w-24"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Skeleton Card 2 -->
+                    <div class="bg-surface rounded-civic shadow-civic border border-border">
+                        <div class="animate-pulse">
+                            <div class="bg-secondary-200 h-48 rounded-t-civic"></div>
+                            <div class="p-6">
+                                <div class="h-4 bg-secondary-200 rounded mb-3"></div>
+                                <div class="h-3 bg-secondary-200 rounded mb-2"></div>
+                                <div class="h-3 bg-secondary-200 rounded mb-4"></div>
+                                <div class="h-2 bg-secondary-200 rounded mb-4"></div>
+                                <div class="flex justify-between">
+                                    <div class="h-3 bg-secondary-200 rounded w-20"></div>
+                                    <div class="h-8 bg-secondary-200 rounded w-24"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center mt-8">
+                <button id="loadMoreBtn" class="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-civic hover:bg-primary-700 transition-civic" onclick="loadMoreProjects()">
+                    <span class="load-more-text">Load More Projects</span>
+                    <div class="load-more-loading hidden flex items-center">
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                        </svg>
+                        Loading...
+                    </div>
+                    <svg class="w-5 h-5 ml-2 load-more-text" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Filter Panel -->
+    <div id="mobileFilterPanel" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden lg:hidden">
+        <div class="absolute inset-y-0 right-0 w-full max-w-sm bg-surface shadow-civic-elevated">
+            <div class="flex items-center justify-between p-4 border-b border-border">
+                <h2 class="font-heading text-lg font-semibold text-text-primary">Filters</h2>
+                <button onclick="toggleMobileFilters()" class="p-2 text-text-secondary hover:text-text-primary transition-civic">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="p-4 overflow-y-auto h-full pb-20">
+                <!-- Mobile filter content (same as desktop) -->
+                <div class="space-y-6">
+                    <!-- Ministry Filter -->
+                    <div>
+                        <button class="flex items-center justify-between w-full py-2 text-left font-medium text-text-primary" onclick="toggleMobileFilterSection('ministry')">
+                            <span>Ministry</span>
+                            <svg class="w-5 h-5 transform transition-transform" id="mobileMinistryChevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div id="mobileMinistryFilter" class="mt-3 space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="health" />
+                                <span class="ml-2 text-sm text-text-secondary">Ministry of Health</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">24</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="education" />
+                                <span class="ml-2 text-sm text-text-secondary">Ministry of Education</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">18</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="infrastructure" />
+                                <span class="ml-2 text-sm text-text-secondary">Ministry of Infrastructure</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">32</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="agriculture" />
+                                <span class="ml-2 text-sm text-text-secondary">Ministry of Agriculture</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">15</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Region Filter -->
+                    <div>
+                        <button class="flex items-center justify-between w-full py-2 text-left font-medium text-text-primary" onclick="toggleMobileFilterSection('region')">
+                            <span>Region</span>
+                            <svg class="w-5 h-5 transform transition-transform" id="mobileRegionChevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div id="mobileRegionFilter" class="mt-3 space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="lagos" />
+                                <span class="ml-2 text-sm text-text-secondary">Lagos State</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">28</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="abuja" />
+                                <span class="ml-2 text-sm text-text-secondary">FCT Abuja</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">22</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="kano" />
+                                <span class="ml-2 text-sm text-text-secondary">Kano State</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">19</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Budget Range Filter -->
+                    <div>
+                        <button class="flex items-center justify-between w-full py-2 text-left font-medium text-text-primary" onclick="toggleMobileFilterSection('budget')">
+                            <span>Budget Range</span>
+                            <svg class="w-5 h-5 transform transition-transform" id="mobileBudgetChevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div id="mobileBudgetFilter" class="mt-3 space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="0-1m" />
+                                <span class="ml-2 text-sm text-text-secondary">Under ₦1M</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">12</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="1m-10m" />
+                                <span class="ml-2 text-sm text-text-secondary">₦1M - ₦10M</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">35</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="10m-100m" />
+                                <span class="ml-2 text-sm text-text-secondary">₦10M - ₦100M</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">28</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="100m+" />
+                                <span class="ml-2 text-sm text-text-secondary">Over ₦100M</span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">14</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Status Filter -->
+                    <div>
+                        <button class="flex items-center justify-between w-full py-2 text-left font-medium text-text-primary" onclick="toggleMobileFilterSection('status')">
+                            <span>Project Status</span>
+                            <svg class="w-5 h-5 transform transition-transform" id="mobileStatusChevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div id="mobileStatusFilter" class="mt-3 space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="completed" />
+                                <span class="ml-2 text-sm text-text-secondary flex items-center">
+                                    <span class="w-2 h-2 bg-success rounded-full mr-2"></span>
+                                    Completed
+                                </span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">42</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="in-progress" />
+                                <span class="ml-2 text-sm text-text-secondary flex items-center">
+                                    <span class="w-2 h-2 bg-warning rounded-full mr-2"></span>
+                                    In Progress
+                                </span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">31</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="planned" />
+                                <span class="ml-2 text-sm text-text-secondary flex items-center">
+                                    <span class="w-2 h-2 bg-secondary-400 rounded-full mr-2"></span>
+                                    Planned
+                                </span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">16</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" value="abandoned" />
+                                <span class="ml-2 text-sm text-text-secondary flex items-center">
+                                    <span class="w-2 h-2 bg-error rounded-full mr-2"></span>
+                                    Abandoned
+                                </span>
+                                <span class="ml-auto text-xs text-text-secondary bg-secondary-100 px-2 py-1 rounded-full">8</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Filter Actions -->
+            <div class="absolute bottom-0 left-0 right-0 p-4 bg-surface border-t border-border">
+                <div class="flex space-x-3">
+                    <button class="flex-1 px-4 py-3 border border-border text-text-secondary rounded-civic hover:bg-secondary-50 transition-civic" onclick="clearAllFilters()">
+                        Clear All
+                    </button>
+                    <button class="flex-1 px-4 py-3 bg-primary text-white rounded-civic hover:bg-primary-700 transition-civic" onclick="applyMobileFilters()">
+                        Apply Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation (Mobile) -->
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-border z-30">
+        <div class="flex items-center justify-around py-2">
+            <a href="dashboard.html" class="flex flex-col items-center py-2 px-3 text-text-secondary hover:text-primary transition-civic">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z"/>
+                </svg>
+                <span class="text-xs mt-1">Dashboard</span>
+            </a>
+            
+            <a href="project_browse_search.html" class="flex flex-col items-center py-2 px-3 text-primary">
+                <svg class="w-6 h-6" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <span class="text-xs mt-1">Browse</span>
+            </a>
+            
+            <a href="project_details.html" class="flex flex-col items-center py-2 px-3 text-text-secondary hover:text-primary transition-civic">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <span class="text-xs mt-1">Details</span>
+            </a>
+            
+            <a href="user_profile_settings.html" class="flex flex-col items-center py-2 px-3 text-text-secondary hover:text-primary transition-civic">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+                <span class="text-xs mt-1">Profile</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchSuggestions = document.getElementById('searchSuggestions');
+
+        searchInput.addEventListener('focus', function() {
+            searchSuggestions.classList.remove('hidden');
+        });
+
+        searchInput.addEventListener('blur', function() {
+            setTimeout(() => {
+                searchSuggestions.classList.add('hidden');
+            }, 200);
+        });
+
+        function clearSearch() {
+            searchInput.value = '';
+            searchInput.focus();
+        }
+
+        // Sort dropdown functionality
+        function toggleSortDropdown() {
+            const dropdown = document.getElementById('sortDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        function sortProjects(sortType) {
+            console.log('Sorting by:', sortType);
+            document.getElementById('sortDropdown').classList.add('hidden');
+            // Add sorting logic here
+        }
+
+        // Filter functionality
+        function toggleFilterSection(section) {
+            const filter = document.getElementById(section + 'Filter');
+            const chevron = document.getElementById(section + 'Chevron');
+            
+            filter.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        function toggleMobileFilterSection(section) {
+            const filter = document.getElementById('mobile' + section.charAt(0).toUpperCase() + section.slice(1) + 'Filter');
+            const chevron = document.getElementById('mobile' + section.charAt(0).toUpperCase() + section.slice(1) + 'Chevron');
+            
+            filter.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        function toggleMobileFilters() {
+            const panel = document.getElementById('mobileFilterPanel');
+            panel.classList.toggle('hidden');
+        }
+
+        function clearAllFilters() {
+            // Clear all checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Clear active filters display
+            document.getElementById('activeFilters').innerHTML = '';
+            document.getElementById('activeFiltersText').classList.add('hidden');
+            
+            console.log('All filters cleared');
+        }
+
+        function applyMobileFilters() {
+            toggleMobileFilters();
+            console.log('Mobile filters applied');
+        }
+
+        // Load more functionality
+        function loadMoreProjects() {
+            const button = document.getElementById('loadMoreBtn');
+            const text = button.querySelector('.load-more-text');
+            const loading = button.querySelector('.load-more-loading');
+            
+            // Show loading state
+            text.forEach(el => el.classList.add('hidden'));
+            loading.classList.remove('hidden');
+            button.disabled = true;
+            
+            // Simulate loading
+            setTimeout(() => {
+                // Reset button state
+                text.forEach(el => el.classList.remove('hidden'));
+                loading.classList.add('hidden');
+                button.disabled = false;
+                
+                console.log('More projects loaded');
+            }, 2000);
+        }
+
+        // Refresh functionality
+        function refreshProjects() {
+            const indicator = document.getElementById('refreshIndicator');
+            indicator.innerHTML = `
+                <div class="flex items-center space-x-2 px-3 py-2 text-sm text-text-secondary">
+                    <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    <span>Refreshing...</span>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                indicator.innerHTML = `
+                    <button 
+                        class="flex items-center space-x-2 px-3 py-2 text-sm text-text-secondary hover:text-text-primary transition-civic"
+                        onclick="refreshProjects()"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                        <span>Refresh</span>
+                    </button>
+                `;
+            }, 1500);
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const sortButton = document.getElementById('sortButton');
+            const sortDropdown = document.getElementById('sortDropdown');
+            
+            if (!sortButton.contains(event.target) && !sortDropdown.contains(event.target)) {
+                sortDropdown.classList.add('hidden');
+            }
+        });
+
+        // Initialize filter sections as expanded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Desktop filters
+            ['ministry', 'region', 'budget', 'status'].forEach(section => {
+                const filter = document.getElementById(section + 'Filter');
+                const chevron = document.getElementById(section + 'Chevron');
+                filter.classList.remove('hidden');
+                chevron.classList.add('rotate-180');
+            });
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

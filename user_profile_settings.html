@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile & Settings - GovSpend Mirror</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fgovspendm5687back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Global Header -->
+    <header class="bg-surface border-b border-border sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="dashboard.html" class="flex items-center space-x-2">
+                        <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        <span class="font-heading font-bold text-xl text-text-primary">GovSpend Mirror</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="dashboard.html" class="text-text-secondary hover:text-text-primary transition-civic">Dashboard</a>
+                    <a href="project_browse_search.html" class="text-text-secondary hover:text-text-primary transition-civic">Browse Projects</a>
+                    <a href="user_profile_settings.html" class="text-primary font-medium">Profile</a>
+                </nav>
+
+                <!-- User Menu -->
+                <div class="flex items-center space-x-4">
+                    <!-- Notifications -->
+                    <button class="relative p-2 text-text-secondary hover:text-text-primary transition-civic">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM10.5 3.5L6 8h4v12l4-4.5V8h4l-4.5-4.5z"/>
+                        </svg>
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+                    </button>
+
+                    <!-- Profile Avatar -->
+                    <div class="relative">
+                        <button class="flex items-center space-x-2 p-1 rounded-civic hover:bg-secondary-50 transition-civic">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Profile" class="w-8 h-8 rounded-full object-cover" onerror="this.src='https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;" />
+                        </button>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button class="md:hidden p-2 text-text-secondary hover:text-text-primary transition-civic" onclick="toggleMobileMenu()">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobileMenu" class="md:hidden hidden border-t border-border">
+                <div class="py-2 space-y-1">
+                    <a href="dashboard.html" class="block px-4 py-2 text-text-secondary hover:text-text-primary hover:bg-secondary-50 transition-civic">Dashboard</a>
+                    <a href="project_browse_search.html" class="block px-4 py-2 text-text-secondary hover:text-text-primary hover:bg-secondary-50 transition-civic">Browse Projects</a>
+                    <a href="user_profile_settings.html" class="block px-4 py-2 text-primary font-medium bg-primary-50">Profile</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+            <!-- Desktop Sidebar Navigation -->
+            <div class="hidden lg:block lg:col-span-3">
+                <div class="bg-surface rounded-civic shadow-civic p-6 sticky top-24">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Profile" class="w-12 h-12 rounded-full object-cover" onerror="this.src='https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;" />
+                        <div>
+                            <h3 class="font-heading font-semibold text-text-primary">Alex Johnson</h3>
+                            <p class="text-sm text-text-secondary">Citizen</p>
+                        </div>
+                    </div>
+                    
+                    <nav class="space-y-2">
+                        <button onclick="showTab('overview')" id="overviewTab" class="w-full flex items-center space-x-3 px-3 py-2 text-left rounded-civic bg-primary-50 text-primary font-medium transition-civic">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                            </svg>
+                            <span>Overview</span>
+                        </button>
+                        <button onclick="showTab('evidence')" id="evidenceTab" class="w-full flex items-center space-x-3 px-3 py-2 text-left rounded-civic text-text-secondary hover:bg-secondary-50 hover:text-text-primary transition-civic">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                            </svg>
+                            <span>My Evidence</span>
+                        </button>
+                        <button onclick="showTab('bookmarks')" id="bookmarksTab" class="w-full flex items-center space-x-3 px-3 py-2 text-left rounded-civic text-text-secondary hover:bg-secondary-50 hover:text-text-primary transition-civic">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                            </svg>
+                            <span>Bookmarked Projects</span>
+                        </button>
+                        <button onclick="showTab('settings')" id="settingsTab" class="w-full flex items-center space-x-3 px-3 py-2 text-left rounded-civic text-text-secondary hover:bg-secondary-50 hover:text-text-primary transition-civic">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+                            </svg>
+                            <span>Settings</span>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Mobile Tab Navigation -->
+            <div class="lg:hidden mb-6">
+                <div class="bg-surface rounded-civic shadow-civic overflow-hidden">
+                    <div class="flex">
+                        <button onclick="showTab('overview')" id="mobileOverviewTab" class="flex-1 py-3 px-4 text-center text-sm font-medium bg-primary-50 text-primary border-b-2 border-primary transition-civic">
+                            Overview
+                        </button>
+                        <button onclick="showTab('evidence')" id="mobileEvidenceTab" class="flex-1 py-3 px-4 text-center text-sm font-medium text-text-secondary hover:text-text-primary transition-civic">
+                            Evidence
+                        </button>
+                        <button onclick="showTab('bookmarks')" id="mobileBookmarksTab" class="flex-1 py-3 px-4 text-center text-sm font-medium text-text-secondary hover:text-text-primary transition-civic">
+                            Bookmarks
+                        </button>
+                        <button onclick="showTab('settings')" id="mobileSettingsTab" class="flex-1 py-3 px-4 text-center text-sm font-medium text-text-secondary hover:text-text-primary transition-civic">
+                            Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="lg:col-span-9">
+                <!-- Overview Tab -->
+                <div id="overviewContent" class="tab-content">
+                    <!-- Profile Header -->
+                    <div class="bg-surface rounded-civic shadow-civic p-6 mb-6">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Profile" class="w-20 h-20 rounded-full object-cover" onerror="this.src='https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;" />
+                            <div class="flex-1">
+                                <h1 class="font-heading text-2xl font-bold text-text-primary">Alex Johnson</h1>
+                                <p class="text-text-secondary mb-2">Citizen • Joined January 2024</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent-100 text-accent-700">
+                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                        </svg>
+                                        Active Contributor
+                                    </span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-700">
+                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        Verified Account
+                                    </span>
+                                </div>
+                            </div>
+                            <button class="px-4 py-2 bg-primary text-white rounded-civic hover:bg-primary-700 transition-civic">
+                                Edit Profile
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-surface rounded-civic shadow-civic p-6">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-accent-100 rounded-civic flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-accent-600" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-text-secondary">Evidence Submitted</p>
+                                    <p class="text-2xl font-bold text-text-primary">23</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-surface rounded-civic shadow-civic p-6">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-primary-100 rounded-civic flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-primary-600" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-text-secondary">Projects Followed</p>
+                                    <p class="text-2xl font-bold text-text-primary">12</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-surface rounded-civic shadow-civic p-6">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-warning-100 rounded-civic flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-warning-600" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-text-secondary">Community Votes</p>
+                                    <p class="text-2xl font-bold text-text-primary">156</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="bg-surface rounded-civic shadow-civic p-6">
+                        <h2 class="font-heading text-lg font-semibold text-text-primary mb-4">Recent Activity</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <div class="flex-shrink-0 w-8 h-8 bg-accent-100 rounded-full flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-accent-600" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm text-text-primary">
+                                        Submitted evidence for <a href="project_details.html" class="text-primary hover:text-primary-700">Metro Station Construction</a>
+                                    </p>
+                                    <p class="text-xs text-text-secondary">2 hours ago</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-3">
+                                <div class="flex-shrink-0 w-8 h-8 bg-warning-100 rounded-full flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-warning-600" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm text-text-primary">
+                                        Voted on project completion for <a href="project_details.html" class="text-primary hover:text-primary-700">School Renovation Program</a>
+                                    </p>
+                                    <p class="text-xs text-text-secondary">1 day ago</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-3">
+                                <div class="flex-shrink-0 w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm text-text-primary">
+                                        Bookmarked <a href="project_details.html" class="text-primary hover:text-primary-700">Highway Expansion Project</a>
+                                    </p>
+                                    <p class="text-xs text-text-secondary">3 days ago</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-border">
+                            <button class="text-primary hover:text-primary-700 text-sm font-medium transition-civic">
+                                View All Activity
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Evidence Tab -->
+                <div id="evidenceContent" class="tab-content hidden">
+                    <div class="bg-surface rounded-civic shadow-civic p-6 mb-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+                            <h2 class="font-heading text-lg font-semibold text-text-primary mb-2 sm:mb-0">My Evidence Submissions</h2>
+                            <button class="px-4 py-2 bg-primary text-white rounded-civic hover:bg-primary-700 transition-civic">
+                                Upload New Evidence
+                            </button>
+                        </div>
+                        
+                        <!-- Filter Tabs -->
+                        <div class="flex space-x-4 mb-6">
+                            <button class="px-3 py-1 text-sm font-medium bg-primary-50 text-primary rounded-civic">All (23)</button>
+                            <button class="px-3 py-1 text-sm font-medium text-text-secondary hover:text-text-primary transition-civic">Approved (18)</button>
+                            <button class="px-3 py-1 text-sm font-medium text-text-secondary hover:text-text-primary transition-civic">Pending (4)</button>
+                            <button class="px-3 py-1 text-sm font-medium text-text-secondary hover:text-text-primary transition-civic">Flagged (1)</button>
+                        </div>
+
+                        <!-- Evidence Grid -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div class="relative group">
+                                <div class="aspect-w-16 aspect-h-12 bg-secondary-100 rounded-civic overflow-hidden">
+                                    <img src="https://images.pexels.com/photos/1105766/pexels-photo-1105766.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Construction Progress" class="w-full h-48 object-cover" onerror="this.src='https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                                </div>
+                                <div class="absolute top-2 right-2">
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-accent-100 text-accent-700">
+                                        Approved
+                                    </span>
+                                </div>
+                                <div class="mt-2">
+                                    <p class="text-sm font-medium text-text-primary">Metro Station Progress</p>
+                                    <p class="text-xs text-text-secondary">Submitted 2 hours ago</p>
+                                    <div class="flex items-center mt-1 space-x-2">
+                                        <span class="flex items-center text-xs text-text-secondary">
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                            </svg>
+                                            12
+                                        </span>
+                                        <span class="flex items-center text-xs text-text-secondary">
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M21 6h-2l-1-2H6L5 6H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+                                            </svg>
+                                            3 comments
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="relative group">
+                                <div class="aspect-w-16 aspect-h-12 bg-secondary-100 rounded-civic overflow-hidden">
+                                    <img src="https://images.pixabay.com/photo/2017/07/09/03/19/school-2486092_1280.jpg" alt="School Renovation" class="w-full h-48 object-cover" onerror="this.src='https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                                </div>
+                                <div class="absolute top-2 right-2">
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-warning-100 text-warning-700">
+                                        Pending
+                                    </span>
+                                </div>
+                                <div class="mt-2">
+                                    <p class="text-sm font-medium text-text-primary">School Building Completion</p>
+                                    <p class="text-xs text-text-secondary">Submitted 1 day ago</p>
+                                    <div class="flex items-center mt-1 space-x-2">
+                                        <span class="flex items-center text-xs text-text-secondary">
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                            </svg>
+                                            8
+                                        </span>
+                                        <span class="flex items-center text-xs text-text-secondary">
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M21 6h-2l-1-2H6L5 6H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+                                            </svg>
+                                            1 comment
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="relative group">
+                                <div class="aspect-w-16 aspect-h-12 bg-secondary-100 rounded-civic overflow-hidden">
+                                    <img src="https://images.pexels.com/photos/1105766/pexels-photo-1105766.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Road Construction" class="w-full h-48 object-cover" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                                </div>
+                                <div class="absolute top-2 right-2">
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-accent-100 text-accent-700">
+                                        Approved
+                                    </span>
+                                </div>
+                                <div class="mt-2">
+                                    <p class="text-sm font-medium text-text-primary">Highway Expansion</p>
+                                    <p class="text-xs text-text-secondary">Submitted 3 days ago</p>
+                                    <div class="flex items-center mt-1 space-x-2">
+                                        <span class="flex items-center text-xs text-text-secondary">
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                            </svg>
+                                            15
+                                        </span>
+                                        <span class="flex items-center text-xs text-text-secondary">
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M21 6h-2l-1-2H6L5 6H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+                                            </svg>
+                                            5 comments
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 text-center">
+                            <button class="px-4 py-2 border border-border text-text-secondary hover:text-text-primary hover:border-text-secondary rounded-civic transition-civic">
+                                Load More Evidence
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bookmarked Projects Tab -->
+                <div id="bookmarksContent" class="tab-content hidden">
+                    <div class="bg-surface rounded-civic shadow-civic p-6">
+                        <h2 class="font-heading text-lg font-semibold text-text-primary mb-4">Bookmarked Projects</h2>
+                        
+                        <div class="space-y-4">
+                            <div class="border border-border rounded-civic p-4 hover:shadow-civic-elevated transition-civic">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <h3 class="font-medium text-text-primary mb-1">
+                                            <a href="project_details.html" class="hover:text-primary transition-civic">Metro Station Construction Phase 2</a>
+                                        </h3>
+                                        <p class="text-sm text-text-secondary mb-2">Ministry of Transportation • ₹45.2 Cr allocated</p>
+                                        <div class="flex items-center space-x-4 text-xs text-text-secondary">
+                                            <span class="flex items-center">
+                                                <div class="w-2 h-2 bg-warning rounded-full mr-1"></div>
+                                                In Progress
+                                            </span>
+                                            <span>75% Complete</span>
+                                            <span>Updated 2 days ago</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-2 ml-4">
+                                        <button class="p-1 text-text-secondary hover:text-primary transition-civic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5z"/>
+                                            </svg>
+                                        </button>
+                                        <button class="p-1 text-text-secondary hover:text-error transition-civic">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border border-border rounded-civic p-4 hover:shadow-civic-elevated transition-civic">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <h3 class="font-medium text-text-primary mb-1">
+                                            <a href="project_details.html" class="hover:text-primary transition-civic">School Renovation Program</a>
+                                        </h3>
+                                        <p class="text-sm text-text-secondary mb-2">Ministry of Education • ₹12.8 Cr allocated</p>
+                                        <div class="flex items-center space-x-4 text-xs text-text-secondary">
+                                            <span class="flex items-center">
+                                                <div class="w-2 h-2 bg-accent rounded-full mr-1"></div>
+                                                Completed
+                                            </span>
+                                            <span>100% Complete</span>
+                                            <span>Updated 1 week ago</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-2 ml-4">
+                                        <button class="p-1 text-text-secondary hover:text-primary transition-civic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5z"/>
+                                            </svg>
+                                        </button>
+                                        <button class="p-1 text-text-secondary hover:text-error transition-civic">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border border-border rounded-civic p-4 hover:shadow-civic-elevated transition-civic">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <h3 class="font-medium text-text-primary mb-1">
+                                            <a href="project_details.html" class="hover:text-primary transition-civic">Highway Expansion Project</a>
+                                        </h3>
+                                        <p class="text-sm text-text-secondary mb-2">Ministry of Infrastructure • ₹128.5 Cr allocated</p>
+                                        <div class="flex items-center space-x-4 text-xs text-text-secondary">
+                                            <span class="flex items-center">
+                                                <div class="w-2 h-2 bg-secondary rounded-full mr-1"></div>
+                                                Planned
+                                            </span>
+                                            <span>0% Complete</span>
+                                            <span>Updated 3 days ago</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-2 ml-4">
+                                        <button class="p-1 text-text-secondary hover:text-primary transition-civic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5z"/>
+                                            </svg>
+                                        </button>
+                                        <button class="p-1 text-text-secondary hover:text-error transition-civic">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 text-center">
+                            <button class="px-4 py-2 border border-border text-text-secondary hover:text-text-primary hover:border-text-secondary rounded-civic transition-civic">
+                                Load More Projects
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="settingsContent" class="tab-content hidden">
+                    <div class="space-y-6">
+                        <!-- Profile Settings -->
+                        <div class="bg-surface rounded-civic shadow-civic p-6">
+                            <h2 class="font-heading text-lg font-semibold text-text-primary mb-4">Profile Information</h2>
+                            <form class="space-y-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="firstName" class="block text-sm font-medium text-text-primary mb-2">First Name</label>
+                                        <input type="text" id="firstName" value="Alex" class="w-full px-4 py-3 border border-border rounded-civic focus:ring-2 focus:ring-primary focus:border-primary transition-civic" />
+                                    </div>
+                                    <div>
+                                        <label for="lastName" class="block text-sm font-medium text-text-primary mb-2">Last Name</label>
+                                        <input type="text" id="lastName" value="Johnson" class="w-full px-4 py-3 border border-border rounded-civic focus:ring-2 focus:ring-primary focus:border-primary transition-civic" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-text-primary mb-2">Email Address</label>
+                                    <input type="email" id="email" value="alex.johnson@email.com" class="w-full px-4 py-3 border border-border rounded-civic focus:ring-2 focus:ring-primary focus:border-primary transition-civic" />
+                                </div>
+                                <div>
+                                    <label for="phone" class="block text-sm font-medium text-text-primary mb-2">Phone Number</label>
+                                    <input type="tel" id="phone" value="+1 (555) 123-4567" class="w-full px-4 py-3 border border-border rounded-civic focus:ring-2 focus:ring-primary focus:border-primary transition-civic" />
+                                </div>
+                                <div class="flex justify-end">
+                                    <button type="submit" class="px-6 py-2 bg-primary text-white rounded-civic hover:bg-primary-700 transition-civic">
+                                        Save Changes
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Notification Settings -->
+                        <div class="bg-surface rounded-civic shadow-civic p-6">
+                            <h2 class="font-heading text-lg font-semibold text-text-primary mb-4">Notification Preferences</h2>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-sm font-medium text-text-primary">Project Updates</h3>
+                                        <p class="text-sm text-text-secondary">Get notified when projects you follow are updated</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-sm font-medium text-text-primary">Evidence Approval</h3>
+                                        <p class="text-sm text-text-secondary">Get notified when your evidence is reviewed</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-sm font-medium text-text-primary">Community Activity</h3>
+                                        <p class="text-sm text-text-secondary">Get notified about votes and comments on your content</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-sm font-medium text-text-primary">Weekly Summary</h3>
+                                        <p class="text-sm text-text-secondary">Receive weekly digest of platform activity</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Privacy Settings -->
+                        <div class="bg-surface rounded-civic shadow-civic p-6">
+                            <h2 class="font-heading text-lg font-semibold text-text-primary mb-4">Privacy Settings</h2>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-sm font-medium text-text-primary">Public Profile</h3>
+                                        <p class="text-sm text-text-secondary">Allow others to see your profile and contributions</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-sm font-medium text-text-primary">Location Sharing</h3>
+                                        <p class="text-sm text-text-secondary">Share your location for evidence verification</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Security Settings -->
+                        <div class="bg-surface rounded-civic shadow-civic p-6">
+                            <h2 class="font-heading text-lg font-semibold text-text-primary mb-4">Account Security</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <h3 class="text-sm font-medium text-text-primary mb-2">Change Password</h3>
+                                    <button class="px-4 py-2 border border-border text-text-secondary hover:text-text-primary hover:border-text-secondary rounded-civic transition-civic">
+                                        Update Password
+                                    </button>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-sm font-medium text-text-primary mb-2">Two-Factor Authentication</h3>
+                                    <div class="flex items-center justify-between">
+                                        <p class="text-sm text-text-secondary">Add an extra layer of security to your account</p>
+                                        <button class="px-4 py-2 bg-primary text-white rounded-civic hover:bg-primary-700 transition-civic">
+                                            Enable 2FA
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-sm font-medium text-text-primary mb-2">Export Data</h3>
+                                    <p class="text-sm text-text-secondary mb-2">Download your contribution history and data</p>
+                                    <button class="px-4 py-2 border border-border text-text-secondary hover:text-text-primary hover:border-text-secondary rounded-civic transition-civic">
+                                        Download Data
+                                    </button>
+                                </div>
+
+                                <div class="pt-4 border-t border-border">
+                                    <h3 class="text-sm font-medium text-error mb-2">Danger Zone</h3>
+                                    <p class="text-sm text-text-secondary mb-2">Permanently delete your account and all associated data</p>
+                                    <button class="px-4 py-2 bg-error text-white rounded-civic hover:bg-red-600 transition-civic">
+                                        Delete Account
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.add('hidden'));
+
+            // Show selected tab content
+            document.getElementById(tabName + 'Content').classList.remove('hidden');
+
+            // Update desktop tab styles
+            const desktopTabs = ['overviewTab', 'evidenceTab', 'bookmarksTab', 'settingsTab'];
+            desktopTabs.forEach(tabId => {
+                const tab = document.getElementById(tabId);
+                if (tab) {
+                    if (tabId === tabName + 'Tab') {
+                        tab.classList.add('bg-primary-50', 'text-primary', 'font-medium');
+                        tab.classList.remove('text-text-secondary', 'hover:bg-secondary-50', 'hover:text-text-primary');
+                    } else {
+                        tab.classList.remove('bg-primary-50', 'text-primary', 'font-medium');
+                        tab.classList.add('text-text-secondary', 'hover:bg-secondary-50', 'hover:text-text-primary');
+                    }
+                }
+            });
+
+            // Update mobile tab styles
+            const mobileTabs = ['mobileOverviewTab', 'mobileEvidenceTab', 'mobileBookmarksTab', 'mobileSettingsTab'];
+            mobileTabs.forEach(tabId => {
+                const tab = document.getElementById(tabId);
+                if (tab) {
+                    if (tabId === 'mobile' + tabName.charAt(0).toUpperCase() + tabName.slice(1) + 'Tab') {
+                        tab.classList.add('bg-primary-50', 'text-primary', 'border-b-2', 'border-primary');
+                        tab.classList.remove('text-text-secondary', 'hover:text-text-primary');
+                    } else {
+                        tab.classList.remove('bg-primary-50', 'text-primary', 'border-b-2', 'border-primary');
+                        tab.classList.add('text-text-secondary', 'hover:text-text-primary');
+                    }
+                }
+            });
+        }
+
+        // Initialize with overview tab
+        document.addEventListener('DOMContentLoaded', function() {
+            showTab('overview');
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

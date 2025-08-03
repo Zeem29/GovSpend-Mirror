@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login/Register - GovSpend Mirror</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fgovspendm5687back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Global Header -->
+    <header class="bg-surface border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="dashboard.html" class="flex items-center space-x-2">
+                        <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        <span class="font-heading font-bold text-xl text-text-primary">GovSpend Mirror</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md mx-auto">
+            <!-- Welcome Section -->
+            <div class="text-center mb-8">
+                <h1 class="font-heading text-3xl font-bold text-text-primary mb-2">Welcome Back</h1>
+                <p class="text-text-secondary">Track government promises and hold officials accountable</p>
+            </div>
+
+            <!-- Auth Container -->
+            <div class="bg-surface rounded-civic shadow-civic-elevated overflow-hidden">
+                <!-- Tab Navigation -->
+                <div class="flex border-b border-border">
+                    <button id="loginTab" class="flex-1 py-4 px-6 text-center font-medium text-primary border-b-2 border-primary bg-primary-50 transition-civic">
+                        Sign In
+                    </button>
+                    <button id="registerTab" class="flex-1 py-4 px-6 text-center font-medium text-text-secondary hover:text-text-primary transition-civic">
+                        Create Account
+                    </button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="loginForm" class="p-6">
+                    <form class="space-y-6">
+                        <!-- Email/Phone Field -->
+                        <div>
+                            <label for="loginEmail" class="block text-sm font-medium text-text-primary mb-2">
+                                Email or Phone Number
+                            </label>
+                            <input type="text" id="loginEmail" name="loginEmail" class="w-full px-4 py-3 border border-border rounded-civic focus:ring-2 focus:ring-primary focus:border-primary transition-civic" placeholder="Enter your email or phone" required />
+                            <div class="mt-1 text-sm text-error hidden" id="loginEmailError">Please enter a valid email or phone number</div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div>
+                            <label for="loginPassword" class="block text-sm font-medium text-text-primary mb-2">
+                                Password
+                            </label>
+                            <div class="relative">
+                                <input type="password" id="loginPassword" name="loginPassword" class="w-full px-4 py-3 pr-12 border border-border rounded-civic focus:ring-2 focus:ring-primary focus:border-primary transition-civic" placeholder="Enter your password" required />
+                                <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePassword('loginPassword')">
+                                    <svg class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mt-1 text-sm text-error hidden" id="loginPasswordError">Password is required</div>
+                        </div>
+
+                        <!-- Remember Me & Forgot Password -->
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" />
+                                <span class="ml-2 text-sm text-text-secondary">Remember me</span>
+                            </label>
+                            <button type="button" class="text-sm text-primary hover:text-primary-700 transition-civic" onclick="openForgotPassword()">
+                                Forgot password?
+                            </button>
+                        </div>
+
+                        <!-- Sign In Button -->
+                        <button type="submit" class="w-full bg-primary text-white py-3 px-4 rounded-civic font-medium hover:bg-primary-700 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-civic" onclick="handleLogin(event)">
+                            <span class="signin-text">Sign In</span>
+                            <div class="signin-loading hidden flex items-center justify-center">
+                                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                                </svg>
+                                Signing in...
+                            </div>
+                        </button>
+                    </form>
+
+                    <!-- Social Login -->
+                    <div class="mt-6">
+                        <div class="relative">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-border"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-2 bg-surface text-text-secondary">Or continue with</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 grid grid-cols-2 gap-3">
+                            <button class="w-full inline-flex justify-center py-3 px-4 border border-border rounded-civic bg-surface text-sm font-medium text-text-secondary hover:bg-secondary-50 transition-civic">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24">
+                                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                                </svg>
+                                <span class="ml-2">Google</span>
+                            </button>
+                            <button class="w-full inline-flex justify-center py-3 px-4 border border-border rounded-civic bg-surface text-sm font-medium text-text-secondary hover:bg-secondary-50 transition-civic">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                                <span class="ml-2">Facebook</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Register Form -->
+                <div id="registerForm" class="p-6 hidden">
+                    <form class="space-y-6">
+                        <!-- Full Name -->
+                        <div>
+                            <label for="registerName" class="block text-sm font-medium text-text-primary mb-2">
+                                Full Name
+                            </label>
+                            <input type="text" id="registerName" name="registerName" class="w-full px-4 py-3 border border-border rounded-civic focus:ring-2 focus:ring-primary focus:border-primary transition-civic" placeholder="Enter your full name" required />
+                            <div class="mt-1 text-sm text-error hidden" id="registerNameError">Full name is required</div>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="registerEmail" class="block text-sm font-medium text-text-primary mb-2">
+                                Email Address
+                            </label>
+                            <input type="email" id="registerEmail" name="registerEmail" class="w-full px-4 py-3 border border-border rounded-civic focus:ring-2 focus:ring-primary focus:border-primary transition-civic" placeholder="Enter your email address" required />
+                            <div class="mt-1 text-sm text-error hidden" id="registerEmailError">Please enter a valid email address</div>
+                        </div>
+
+                        <!-- User Type Selection -->
+                        <div>
+                            <label class="block text-sm font-medium text-text-primary mb-2">
+                                Account Type
+                            </label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="relative">
+                                    <input type="radio" name="userType" value="citizen" class="sr-only" checked />
+                                    <div class="border-2 border-primary bg-primary-50 rounded-civic p-4 cursor-pointer transition-civic hover:bg-primary-100">
+                                        <div class="flex items-center">
+                                            <svg class="w-5 h-5 text-primary mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                            </svg>
+                                            <span class="text-sm font-medium text-primary">Citizen</span>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="relative">
+                                    <input type="radio" name="userType" value="official" class="sr-only" />
+                                    <div class="border-2 border-border bg-surface rounded-civic p-4 cursor-pointer transition-civic hover:bg-secondary-50">
+                                        <div class="flex items-center">
+                                            <svg class="w-5 h-5 text-text-secondary mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10z"/>
+                                            </svg>
+                                            <span class="text-sm font-medium text-text-secondary">Government Official</span>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div>
+                            <label for="registerPassword" class="block text-sm font-medium text-text-primary mb-2">
+                                Password
+                            </label>
+                            <div class="relative">
+                                <input type="password" id="registerPassword" name="registerPassword" class="w-full px-4 py-3 pr-12 border border-border rounded-civic focus:ring-2 focus:ring-primary focus:border-primary transition-civic" placeholder="Create a strong password" required />
+                                <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePassword('registerPassword')">
+                                    <svg class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mt-1 text-sm text-text-secondary">Must be at least 8 characters long</div>
+                            <div class="mt-1 text-sm text-error hidden" id="registerPasswordError">Password must be at least 8 characters</div>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div>
+                            <label for="confirmPassword" class="block text-sm font-medium text-text-primary mb-2">
+                                Confirm Password
+                            </label>
+                            <div class="relative">
+                                <input type="password" id="confirmPassword" name="confirmPassword" class="w-full px-4 py-3 pr-12 border border-border rounded-civic focus:ring-2 focus:ring-primary focus:border-primary transition-civic" placeholder="Confirm your password" required />
+                                <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePassword('confirmPassword')">
+                                    <svg class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mt-1 text-sm text-error hidden" id="confirmPasswordError">Passwords do not match</div>
+                        </div>
+
+                        <!-- Terms Acceptance -->
+                        <div class="flex items-start">
+                            <input type="checkbox" id="acceptTerms" class="w-4 h-4 text-primary border-border rounded focus:ring-primary mt-1" />
+                            <label for="acceptTerms" class="ml-2 text-sm text-text-secondary">
+                                I agree to the <a href="javascript:void(0)" class="text-primary hover:text-primary-700">Terms of Service</a> and <a href="javascript:void(0)" class="text-primary hover:text-primary-700">Privacy Policy</a>
+                            </label>
+                        </div>
+
+                        <!-- Create Account Button -->
+                        <button type="submit" class="w-full bg-primary text-white py-3 px-4 rounded-civic font-medium hover:bg-primary-700 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-civic" onclick="handleRegister(event)">
+                            <span class="register-text">Create Account</span>
+                            <div class="register-loading hidden flex items-center justify-center">
+                                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                                </svg>
+                                Creating account...
+                            </div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Demo Credentials -->
+            <div class="mt-8 p-4 bg-accent-50 border border-accent-100 rounded-civic">
+                <h3 class="font-medium text-accent-700 mb-2">Demo Credentials</h3>
+                <div class="text-sm text-accent-600 space-y-1">
+                    <p><strong>Citizen:</strong> citizen@example.com / password123</p>
+                    <p><strong>Government Official:</strong> official@gov.org / admin2024</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-surface rounded-civic shadow-civic-elevated max-w-md w-full">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-heading text-lg font-semibold text-text-primary">Reset Password</h3>
+                    <button onclick="closeForgotPassword()" class="text-text-secondary hover:text-text-primary">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <p class="text-text-secondary mb-4">Enter your email address and we'll send you a link to reset your password.</p>
+                <form class="space-y-4">
+                    <div>
+                        <label for="resetEmail" class="block text-sm font-medium text-text-primary mb-2">
+                            Email Address
+                        </label>
+                        <input type="email" id="resetEmail" class="w-full px-4 py-3 border border-border rounded-civic focus:ring-2 focus:ring-primary focus:border-primary transition-civic" placeholder="Enter your email address" required />
+                    </div>
+                    <button type="submit" class="w-full bg-primary text-white py-3 px-4 rounded-civic font-medium hover:bg-primary-700 transition-civic" onclick="handlePasswordReset(event)">
+                        Send Reset Link
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        document.getElementById('loginTab').addEventListener('click', function() {
+            switchTab('login');
+        });
+
+        document.getElementById('registerTab').addEventListener('click', function() {
+            switchTab('register');
+        });
+
+        function switchTab(tab) {
+            const loginTab = document.getElementById('loginTab');
+            const registerTab = document.getElementById('registerTab');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+
+            if (tab === 'login') {
+                loginTab.classList.add('text-primary', 'border-b-2', 'border-primary', 'bg-primary-50');
+                loginTab.classList.remove('text-text-secondary');
+                registerTab.classList.add('text-text-secondary');
+                registerTab.classList.remove('text-primary', 'border-b-2', 'border-primary', 'bg-primary-50');
+                
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+            } else {
+                registerTab.classList.add('text-primary', 'border-b-2', 'border-primary', 'bg-primary-50');
+                registerTab.classList.remove('text-text-secondary');
+                loginTab.classList.add('text-text-secondary');
+                loginTab.classList.remove('text-primary', 'border-b-2', 'border-primary', 'bg-primary-50');
+                
+                registerForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+            }
+        }
+
+        // User type selection
+        document.querySelectorAll('input[name="userType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('input[name="userType"]').forEach(r => {
+                    const label = r.parentElement;
+                    const div = label.querySelector('div');
+                    const span = label.querySelector('span');
+                    const svg = label.querySelector('svg');
+                    
+                    if (r.checked) {
+                        div.classList.add('border-primary', 'bg-primary-50');
+                        div.classList.remove('border-border', 'bg-surface');
+                        span.classList.add('text-primary');
+                        span.classList.remove('text-text-secondary');
+                        svg.classList.add('text-primary');
+                        svg.classList.remove('text-text-secondary');
+                    } else {
+                        div.classList.remove('border-primary', 'bg-primary-50');
+                        div.classList.add('border-border', 'bg-surface');
+                        span.classList.remove('text-primary');
+                        span.classList.add('text-text-secondary');
+                        svg.classList.remove('text-primary');
+                        svg.classList.add('text-text-secondary');
+                    }
+                });
+            });
+        });
+
+        // Password toggle functionality
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const type = field.getAttribute('type') === 'password' ? 'text' : 'password';
+            field.setAttribute('type', type);
+        }
+
+        // Modal functionality
+        function openForgotPassword() {
+            document.getElementById('forgotPasswordModal').classList.remove('hidden');
+        }
+
+        function closeForgotPassword() {
+            document.getElementById('forgotPasswordModal').classList.add('hidden');
+        }
+
+        // Form submission handlers
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const button = event.target;
+            const text = button.querySelector('.signin-text');
+            const loading = button.querySelector('.signin-loading');
+            
+            // Show loading state
+            text.classList.add('hidden');
+            loading.classList.remove('hidden');
+            button.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Reset button state
+                text.classList.remove('hidden');
+                loading.classList.add('hidden');
+                button.disabled = false;
+                
+                // Redirect to dashboard
+                window.location.href = 'dashboard.html';
+            }, 2000);
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const button = event.target;
+            const text = button.querySelector('.register-text');
+            const loading = button.querySelector('.register-loading');
+            
+            // Show loading state
+            text.classList.add('hidden');
+            loading.classList.remove('hidden');
+            button.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Reset button state
+                text.classList.remove('hidden');
+                loading.classList.add('hidden');
+                button.disabled = false;
+                
+                // Redirect to dashboard
+                window.location.href = 'dashboard.html';
+            }, 2000);
+        }
+
+        function handlePasswordReset(event) {
+            event.preventDefault();
+            
+            // Show success message and close modal
+            alert('Password reset link sent to your email!');
+            closeForgotPassword();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('forgotPasswordModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeForgotPassword();
+            }
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>
